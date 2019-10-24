@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <link rel="stylesheet" href="../css/animate.css">
+</head>
+<body>
+    <div id="app">
+        <!-- 这里主要是自定义class, 使用animate的动画效果， 就不用自己写-->
+        <transition 
+            enter-active-class="animated pulse"
+            leave-active-class="animated flash"
+        >
+            <div v-show="show">hello world</div>
+        </transition>
+        <input type="button" value="click" @click="handelClick">
+    </div>
+    <script>
+        var vm = new Vue({
+            el: "#app",
+            data:{
+                show: true
+            },
+            methods:{
+                handelClick: function(){
+                    this.show = !this.show
+                }
+            }
+        })
+    </script>
+</body>
+</html>
