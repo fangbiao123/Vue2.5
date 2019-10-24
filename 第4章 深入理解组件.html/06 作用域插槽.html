@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <chlid>
+            <!-- 插槽中使用template, 使用slot-scope传入参数  -->
+            <template slot-scope="props">
+                <li>{{props.item}}</li>
+            </template>
+            
+        </chlid>
+    </div>
+    
+    <script>
+        Vue.component("chlid",{
+            data: function(){
+                return {
+                    content: [1,2,3,4]
+                }
+            },
+            // 使用插槽，并且使用模板语法循环，绑定值。在html中使用slot-scope传入参数
+            template: `
+                <div>
+                    <slot v-for="item in content" :item=item></slot>
+                </div>
+            `
+        })
+        var vm = new Vue({
+            el: "#app"
+        })
+    </script>
+</body>
+</html>

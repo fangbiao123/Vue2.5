@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <count param="hello world"></count>
+    </div>
+    <script>
+        var count = {
+            props: {
+                param: {
+                    type: [Number, String],
+                    required: false,
+                    default: "默认值",
+                    validator: function(value){
+                        if (!value){
+                            console.log("validator")
+                            return true;
+                        }
+                        return (value.length > 5);
+                    }
+                }
+            },
+            template: "<div>{{param}}</div>"
+        }
+        var vm = new Vue({
+            el: "#app",
+            components: {
+                count: count
+            }
+        })
+    </script>
+</body>
+</html>

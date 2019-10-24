@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <span :title="title">
+            标题
+            {{ reversedMessage }}
+        </span>
+        <br>
+        <span>
+            {{message}} 
+        </span>
+        <input type="button" value="点击反转" @click='reverse()'>
+        <br>
+        
+        <a v-bind:[attribute]="e">动态参数</a>
+        <input type="button" value="点击变化参数" @click="change_a()">
+    </div>
+    <script>
+        var data = {
+                "title": "这是标题, 页面加载于"+ new Date().toLocaleString(),
+                "message": "hello Vue.js!", // 不能使用大写的字符命名键名
+                "attribute": "href",
+                "e": "app_1"
+            }
+        // 会阻止修改现有属性
+        // Object.freeze(data);
+        var vm = new Vue({
+            el: "#app",
+            beforeCreate: function(){ // 一共有11个生命周期函数
+                // 创建实例前
+                console.log("beforeCreate")
+            },
+            created: function(){
+                // 实例创建成功后
+                console.log("Created")
+            },
+            beforeMount:function(){
+                // 这个函数执行后会，数据与模板生成的dom元素会挂在页面上
+                console.log("beforMount")
+            },
+            mounted: function(){
+                // 数据与模板生成的dom元素挂在页面上后
+                console.log("Mountd")
+            },
+            beforeDestroy: function(){
+                // 销毁实例
+                console.log("beforeDestroy")
+            },
+            destroyed: function(){
+                // 销毁实例后
+                console.log("destroyd")
+            },
+            beforeUpdate: function(){
+                // 修改data前
+                console.log("beforUpdate")
+            },
+            updated: function(){
+                // 修改实例后
+                console.log("updated")
+            },
+            data: data,
+            methods: {
+                reverse(){ // 反转字符串
+                    this.message = this.message.split('').reverse().join("")
+                },
+                change_a(){
+                    this.attribute="id"
+                }
+            },
+            computed: { // 计算机属性, 调用的时候不能加（）
+                // 计算属性的 getter
+                // 计算属性还用 set属性
+                // 计算属性是基于它们的响应式依赖进行缓存的。只在相关响应式依赖发生改变时它们才会重新求值
+                reversedMessage: function () {
+                    // `this` 指向 vm 实例
+                    return this.message.split('').reverse().join('')
+                }
+            }
+        })
+        // Vue 实例还暴露了一些有用的实例属性与方法。它们都有前缀 $，以便与用户定义的属性区分开来
+        console.log(vm.$data === data)
+        console.log(vm.$el === document.getElementById('app'))
+        vm.$watch("message", function(){
+            console.log("message 改变后调用")
+        })
+    </script>
+</body>
+</html>

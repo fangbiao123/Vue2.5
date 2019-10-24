@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <table>
+            <tbody>
+                <!-- 直接使用子组件因为html5规范的问题会出现bug -->
+                <!-- <row></row>
+                <row></row>
+                <row></row> -->
+                <!-- 使用is可以解决这个问题 -->
+                <tr is="row" ref="tr"></tr>
+                <tr is="row"></tr>
+                <tr is="row"></tr>
+            </tbody>
+        </table>
+
+        <!-- 在Vue中使用dom -->
+        <div ref="div" @click="handleClick">这是div</div>
+    </div>
+    <script>
+
+        Vue.component("row", {
+            // 子组件的data需要一个function，返回的是对象。为了每个子组件有自己单独的数据
+            data: function(){
+                return {
+                    content: "this is content"
+                }
+            },
+            template: "<tr><td>{{content}}</td></tr>"
+        })
+
+        var vm = new Vue({
+            el: "#app",
+            data: {
+                message: "message"
+            },
+            methods: {
+                reverse() { // 反转字符串
+                    this.message = this.message.split('').reverse().join("")
+                },
+                handleClick: function(){
+                    // 可以直接获取到这个dom
+                    console.log(this.$refs.div.innerHTML);
+                    // 获取子组件dom, 获取的是组件的应用
+                    console.log(this.$refs.tr)
+                }
+            },
+
+        })
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <p>{{message}}</p>
+    </div>
+    <script>
+        // 生命周期函数
+
+        var vm = new Vue({
+            el: "#app",
+            data: {
+                "message": "hello world"
+            },
+            methods: {},
+            // 一共有11个生命周期函数
+            beforeCreate: function(){ 
+                // 创建实例前
+                console.log("beforeCreate")
+            },
+            created: function(){
+                // 实例创建成功后
+                console.log("Created")
+            },
+            beforeMount:function(){
+                // 这个函数执行后会，数据与模板生成的dom元素会挂在页面上
+                console.log("beforMount")
+            },
+            mounted: function(){
+                // 数据与模板生成的dom元素挂在页面上后
+                console.log("Mountd")
+            },
+            beforeDestroy: function(){
+                // 销毁实例
+                console.log("beforeDestroy")
+            },
+            destroyed: function(){
+                // 销毁实例后
+                console.log("destroyd")
+            },
+            beforeUpdate: function(){
+                // 修改data前
+                console.log("beforUpdate")
+            },
+            updated: function(){
+                // 修改实例后
+                console.log("updated")
+            }
+        })
+    </script>
+</body>
+</html>

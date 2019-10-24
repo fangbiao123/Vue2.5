@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <!-- 使用内置组件component来控制子组件 -->
+        <component :is="component_name"></component>
+        <input type="button" value="click" v-on:click="handelButClick">
+    </div>
+    <script>
+        Vue.component("one",{
+            // 使用v-once会把组件缓存在内存中
+            template: `
+                <div v-once>one</div>
+            `
+        })
+        Vue.component("two",{
+            template: `
+                <div v-once>two</div>
+            `
+        })
+        var vm = new Vue({
+            el: "#app",
+            data:{
+                component_name:"one"
+            },
+            methods:{
+                handelButClick(){
+                    this.component_name = this.component_name === "one" ? "two": "one";
+                }
+            }
+        })
+    </script>
+</body>
+</html>

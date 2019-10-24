@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <chlid content="dell"></chlid>
+        <chlid content="lee"></chlid>
+    </div>
+    <script>
+
+        // 给Vue添加一个属性Bus，属性是一个Vue实例，拥有所有的Vue方法。
+        Vue.prototype.bus = new Vue();
+
+        Vue.component("chlid",{
+            props:{
+                content: String
+            },
+            data: function(){
+                return {
+                    selfContent: this.content
+                }
+            },
+            template:"<div @click='handelClick'>{{selfContent}}</div>",
+            methods:{
+                handelClick: function(){
+                    // 使用bus属性发送一个change事件，并且携带参数
+                    this.bus.$emit("change", this.selfContent)
+                }
+            },
+            beforeMount: function(){
+                // 在生命周期函数中监听change事件
+                // 注意this的作用域
+                var this_ = this;
+                this.bus.$on("change",function(value){
+                    this_.selfContent = value;
+                })
+            }
+        })
+
+        var vm = new Vue({
+            el: "#app",
+            data:{},
+            methods: {}
+        })
+    
+    </script>
+</body>
+</html>

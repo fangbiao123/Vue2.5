@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <p>
+            名称：{{fullName}}
+            <br>
+            年龄：{{age}}
+            <br>
+            函数：{{func()}}
+        </p>
+    </div>
+    <script>
+        var vm = new Vue({
+            el: "#app",
+            data:{
+                firstName:"dell",
+                lastName: "lee",
+                age: 12
+            },
+            computed:{
+                // fullName:function(){
+                //     return this.firstName + " " + this.lastName;
+                // }
+                // 计算属性还可以拆分成get和set两个函数
+                fullName: {
+                    // get在获取的时候做一些操作
+                    get: function(){
+                        return this.firstName + " " + this.lastName;
+                    },
+                    // set可以再设置值得时候添加一些运算之类的
+                    set: function(value){
+                        if (!value){
+                            return false;
+                        }
+                        var arr =  value.split(" ");
+                        if (arr.length > 1){
+                            this.firstName = arr[0];
+                            this.lastName = arr[1];
+                        }else{
+                            this.firstName = arr[0]
+                        }
+                    }
+                }
+            },
+            methods:{
+                func: function(){
+                    console.log("func")
+                    return "func"
+                }
+            }
+        })
+    </script>
+</body>
+</html>

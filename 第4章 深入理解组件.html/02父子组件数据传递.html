@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <!-- 实现一个点击自增求和。组件中子组件不能修改父组件传递的值 -->
+        <count :number="1" @inc="handelInc"></count>
+        <count :number="2" @inc="handelInc"></count>
+        <div>{{total}}</div>
+    </div>
+    <script>
+        var component = {
+            props: ["number"],
+            data: function(){
+                return {
+                    selfNumber: 0
+                }
+            },
+            template: "<div @click='handelClick'>{{selfNumber}}</div>",
+            methods:{
+                handelClick: function(){
+                    this.selfNumber += this.number;
+                    this.$emit("inc", this.number)
+                }
+            }
+        }
+        var vm = new Vue({
+            el: "#app",
+            data:{
+                total:0
+            },
+            components:{
+                count: component
+            },
+            methods:{
+                handelInc: function(number){
+                    this.total += number;
+                }
+            }
+        })
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <input type="text" name="" id="" v-model="input"> 
+        <input type="button" value="添加" v-on:click="btn">
+        <p v-show="msg" style="color:red">{{msg}}</p>
+        <ul>
+            <li v-for="(item, i) in u_list" :key="i">{{item}}</li>
+        </ul>
+    </div>
+    <script>
+        var vm = new Vue({
+            el: "#app",
+            data:{
+                msg: "",
+                u_list: [
+                    "第一",
+                    "第二",
+                    "第三",
+                ],
+                input:""
+            },
+            methods:{
+                btn(){
+                    if(this.input == "" || this.input.length < 1){
+                        this.msg="请输入值"
+                        return false;
+                    }
+                    this.u_list.push(this.input)
+                    this.input = this.msg = "";
+                }
+            }
+        })
+    </script>
+</body>
+</html>
